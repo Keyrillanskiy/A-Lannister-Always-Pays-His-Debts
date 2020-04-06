@@ -1,0 +1,2 @@
+rootProject.name='City-mobil_test'
+include ':app'
