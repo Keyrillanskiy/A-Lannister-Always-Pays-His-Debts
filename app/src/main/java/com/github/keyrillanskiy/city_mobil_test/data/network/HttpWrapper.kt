@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
+import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.TimeUnit
@@ -62,7 +63,8 @@ fun isNetworkAvailable(): Boolean {
  * @return [Flow] с типизированным ответом.
  */
 @Suppress("BlockingMethodInNonBlockingContext")
-suspend inline fun <reified T> requestAsync(
+suspend fun <T> requestAsync(
+    responseType: Type,
     url: String,
     requestMethod: HttpRequestMethod = HttpRequestMethod.GET,
     headers: Map<String, String> = emptyMap(),
@@ -107,7 +109,7 @@ suspend inline fun <reified T> requestAsync(
             in 100..199 -> throw IllegalArgumentException("Unexpected response code")
             in 200..299 -> {
                 val responseString = InputStreamReader(urlConnection.inputStream).readText()
-                emit(Response.Success(gson.fromJson(responseString, T::class.java)))
+                emit(Response.Success(gson.fromJson(responseString, responseType)))
             }
             in 300..399 -> throw IllegalArgumentException("Unexpected response code")
             in 400..499 -> Response.Failure.RequestException<T>(errorCode, urlConnection.responseMessage)
