@@ -5,7 +5,7 @@ import com.github.keyrillanskiy.city_mobil_test.domain.models.CharacterInfoRespo
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
 
-private const val PAGE_SIZE = 10
+const val CHARACTER_PAGE_SIZE = 10
 private const val API_URL = "https://anapioficeandfire.com/api/characters/"
 
 /**
@@ -16,7 +16,7 @@ private const val API_URL = "https://anapioficeandfire.com/api/characters/"
  *
  * @return [Flow] со списком персонажей.
  */
-suspend fun getCharacterList(page: Int = 1, pageSize: Int = PAGE_SIZE): Flow<Response<List<CharacterInfoResponse>>> {
+suspend fun getCharacterList(page: Int = 1, pageSize: Int = CHARACTER_PAGE_SIZE): Flow<Response<List<CharacterInfoResponse>>> {
     object : TypeToken<List<CharacterInfoResponse>>() {}.type
     return requestAsync(
         responseType = object : TypeToken<List<CharacterInfoResponse>>() {}.type,
