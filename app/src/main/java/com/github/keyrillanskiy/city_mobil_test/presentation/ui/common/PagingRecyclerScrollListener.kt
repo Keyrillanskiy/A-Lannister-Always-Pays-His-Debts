@@ -4,6 +4,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.keyrillanskiy.city_mobil_test.data.network.CHARACTER_PAGE_SIZE
 
+/**
+ * TODO doc
+ */
 abstract class PagingRecyclerScrollListener(
     private val layoutManager: LinearLayoutManager
 ) : RecyclerView.OnScrollListener() {
@@ -19,12 +22,12 @@ abstract class PagingRecyclerScrollListener(
                 && firstVisibleItemPosition >= 0
                 && totalItemCount >= CHARACTER_PAGE_SIZE
             ) {
-                loadMoreItems()
+                fetchNewItems()
             }
         }
     }
 
-    protected abstract fun loadMoreItems()
+    protected abstract fun fetchNewItems()
 
     abstract fun isLastPage(): Boolean
 

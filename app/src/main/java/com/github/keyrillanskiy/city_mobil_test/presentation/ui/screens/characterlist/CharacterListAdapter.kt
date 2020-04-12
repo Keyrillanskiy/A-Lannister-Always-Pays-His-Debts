@@ -11,9 +11,11 @@ import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characte
 import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist.CharacterListViewHolder.CharacterPageLoadingViewHolder
 import kotlinx.android.synthetic.main.item_character.view.*
 
-class CharacterListAdapter : RecyclerView.Adapter<CharacterListViewHolder>() {
+/**
+ * TODO doc
+ */
+class CharacterListAdapter(private val items: MutableList<CharacterListItem>) : RecyclerView.Adapter<CharacterListViewHolder>() {
 
-    private val items = mutableListOf<CharacterListItem>()
     private var isLoadingItems = false
 
     override fun getItemViewType(position: Int): Int {
