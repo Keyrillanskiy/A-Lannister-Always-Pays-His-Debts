@@ -35,4 +35,6 @@ sealed class CharacterListViewHolder(rootView: View) : RecyclerView.ViewHolder(r
         }
     }
 
+    class CharacterPageLoadingViewHolder(rootView: View) : CharacterListViewHolder(rootView)
+
 }
