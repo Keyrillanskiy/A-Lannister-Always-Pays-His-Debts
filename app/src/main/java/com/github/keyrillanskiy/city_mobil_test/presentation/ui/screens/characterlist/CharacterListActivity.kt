@@ -11,6 +11,10 @@ import com.github.keyrillanskiy.city_mobil_test.data.common.Response
 import com.github.keyrillanskiy.city_mobil_test.domain.models.CharacterInfoResponse
 import kotlinx.android.synthetic.main.activity_character_list.*
 
+/**
+ * Экран, на котором отображается список персонажей.
+ * Поддерживает "пагинацию".
+ */
 class CharacterListActivity : AppCompatActivity() {
 
     private lateinit var viewModel: CharacterListViewModel
@@ -22,12 +26,12 @@ class CharacterListActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(CharacterListViewModel::class.java)
         viewInteractor = CharacterListViewInteractor(rootView).setup {
-            onLoadNewPage = { viewModel.fetchCharacterInfoPage() }
+            onLoadNewPage = { viewModel.fetchNextCharacterInfoPage() }
         }
 
         with(viewModel) {
             observe()
-            fetchCharacterInfoPage()
+            fetchNextCharacterInfoPage()
         }
     }
 

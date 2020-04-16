@@ -12,7 +12,7 @@ import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characte
 import kotlinx.android.synthetic.main.item_character.view.*
 
 /**
- * TODO doc
+ * Адаптер списка персонажей. Поддерживает "пагинацию".
  */
 class CharacterListAdapter(private val items: MutableList<CharacterListItem> = mutableListOf()) : RecyclerView.Adapter<CharacterListViewHolder>() {
 

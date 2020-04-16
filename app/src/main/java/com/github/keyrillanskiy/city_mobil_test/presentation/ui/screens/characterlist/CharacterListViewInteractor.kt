@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.keyrillanskiy.city_mobil_test.presentation.ui.common.PagingRecyclerScrollListener
 import kotlinx.android.synthetic.main.activity_character_list.view.*
 
+/**
+ * Инкапсулирует взаимодействие с [View] на экране [CharacterListActivity].
+ */
 class CharacterListViewInteractor(private val rootView: View) {
 
     var onLoadNewPage: (() -> Unit)? = null

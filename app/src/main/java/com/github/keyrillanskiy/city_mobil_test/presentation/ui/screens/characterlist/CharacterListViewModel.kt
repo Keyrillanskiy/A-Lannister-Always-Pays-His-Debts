@@ -11,9 +11,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-/**
- * TODO doc
- */
 class CharacterListViewModel : ViewModel() {
 
     private val _characterListLiveData = MutableLiveData<Response<List<CharacterInfoResponse>>>()
@@ -22,7 +19,11 @@ class CharacterListViewModel : ViewModel() {
 
     private var currentPage = 1
 
-    fun fetchCharacterInfoPage() {
+    /**
+     * Делает запрос страницы с информацией о персонажах.
+     * При успешном выполнении счетчик страниц инкрементируется.
+     */
+    fun fetchNextCharacterInfoPage() {
         GlobalScope.launch {
             getCharacterList(page = currentPage)
                 .onEach { response -> if (response is Response.Success) currentPage++ }
