@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.activity_character_list.view.*
 class CharacterListViewInteractor(private val rootView: View) {
 
     var onLoadNewPage: (() -> Unit)? = null
+    var onInfoItemClick: ((CharacterListItem.CharacterInfo) -> Unit)? = null
+
     private val listAdapter = CharacterListAdapter()
     private val linearLayoutManager = LinearLayoutManager(rootView.context)
     private val pagingScrollListener = PagingRecyclerScrollListener(linearLayoutManager, onFetchNewItems = {
@@ -21,6 +23,8 @@ class CharacterListViewInteractor(private val rootView: View) {
         init.invoke(this)
 
         with(rootView) {
+            listAdapter.onItemClick = { onInfoItemClick?.invoke(it) }
+
             characterListRecyclerView.apply {
                 adapter = listAdapter
                 layoutManager = linearLayoutManager

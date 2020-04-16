@@ -15,7 +15,6 @@ data class CharacterInfoResponse(
     @SerializedName("aliases") val aliases: List<String>,
     @SerializedName("father") val father: String,
     @SerializedName("mother") val mother: String,
-    @SerializedName("spouse") val spouse: String,
     @SerializedName("tvSeries") val tvSeries: List<String>,
     @SerializedName("playedBy") val playedBy: List<String>
 )

@@ -1,5 +1,6 @@
 package com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist
 
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,17 +10,20 @@ import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characte
 import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist.CharacterListItem.CharacterPageLoadingItem
 import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist.CharacterListViewHolder.CharacterInfoViewHolder
 import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist.CharacterListViewHolder.CharacterPageLoadingViewHolder
+import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.item_character.view.*
 
 /**
  * Адаптер списка персонажей. Поддерживает "пагинацию".
  */
-class CharacterListAdapter(private val items: MutableList<CharacterListItem> = mutableListOf()) : RecyclerView.Adapter<CharacterListViewHolder>() {
+class CharacterListAdapter(private val items: MutableList<CharacterListItem> = mutableListOf()) :
+    RecyclerView.Adapter<CharacterListViewHolder>() {
 
     private var isLoadingItems = false
+    var onItemClick: ((CharacterInfo) -> Unit)? = null
 
     override fun getItemViewType(position: Int): Int {
-        return when(items[position]) {
+        return when (items[position]) {
             is CharacterInfo -> ITEM_CHARACTER_INFO
             CharacterPageLoadingItem -> ITEM_PAGE_LOADING
         }
@@ -43,7 +47,10 @@ class CharacterListAdapter(private val items: MutableList<CharacterListItem> = m
     override fun onBindViewHolder(holder: CharacterListViewHolder, position: Int) {
         val item = items[position]
         when {
-            holder is CharacterInfoViewHolder && item is CharacterInfo -> holder.bindData(item)
+            holder is CharacterInfoViewHolder && item is CharacterInfo -> {
+                holder.bindData(item)
+                holder.itemView.setOnClickListener { onItemClick?.invoke(item) }
+            }
             holder is CharacterPageLoadingViewHolder && item is CharacterPageLoadingItem -> {
                 /*nothing*/
             }
@@ -55,7 +62,7 @@ class CharacterListAdapter(private val items: MutableList<CharacterListItem> = m
     private fun lastPosition() = items.count() - 1
 
     fun insertItems(newItems: List<CharacterListItem>) {
-        if(isLoadingItems) {
+        if (isLoadingItems) {
             hideLoading()
         }
         val insertPosition = items.count()
@@ -101,6 +108,7 @@ sealed class CharacterListViewHolder(rootView: View) : RecyclerView.ViewHolder(r
 }
 
 sealed class CharacterListItem {
+    @Parcelize
     data class CharacterInfo(
         val name: String,
         val gender: String,
@@ -111,10 +119,9 @@ sealed class CharacterListItem {
         val aliases: List<String>,
         val father: String,
         val mother: String,
-        val spouse: String,
         val tvSeries: List<String>,
         val playedBy: List<String>
-    ) : CharacterListItem()
+    ) : CharacterListItem(), Parcelable
 
     object CharacterPageLoadingItem : CharacterListItem()
 }
