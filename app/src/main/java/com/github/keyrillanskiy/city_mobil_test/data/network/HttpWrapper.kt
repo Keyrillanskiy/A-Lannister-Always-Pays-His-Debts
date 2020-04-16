@@ -84,37 +84,37 @@ suspend fun <T> requestAsync(
             .joinToString(separator = "")
         val urlWithQuery = url + queryString
 
-        val urlConnection = try {
-            (URL(urlWithQuery).openConnection() as? HttpURLConnection
+        try {
+            val urlConnection = (URL(urlWithQuery).openConnection() as? HttpURLConnection
                 ?: throw IllegalArgumentException("Not http connection"))
+
+            with(urlConnection) {
+                connectTimeout = CONNECT_TIMEOUT
+                readTimeout = READ_TIMEOUT
+
+                setRequestMethod(requestMethod.name)
+                headers.forEach { (key, value) -> addRequestProperty(key, value) }
+
+                body?.let { bodyString ->
+                    doOutput = true
+                    OutputStreamWriter(outputStream).use { it.write(bodyString) }
+                }
+            }
+
+            when (val errorCode = urlConnection.responseCode) {
+                in 100..199 -> throw IllegalArgumentException("Unexpected response code")
+                in 200..299 -> {
+                    val responseString = InputStreamReader(urlConnection.inputStream).readText()
+                    emit(Response.Success(gson.fromJson(responseString, responseType)))
+                }
+                in 300..399 -> throw IllegalArgumentException("Unexpected response code")
+                in 400..499 -> Response.Failure.RequestException<T>(errorCode, urlConnection.responseMessage)
+                in 500..599 -> Response.Failure.ServerException<T>(errorCode, urlConnection.responseMessage)
+                else -> throw IllegalArgumentException("Unexpected response code")
+            }
         } catch (e: IOException) {
             emit(Response.Failure.ConnectException<T>(e))
             return@flow
-        }
-
-        with(urlConnection) {
-            connectTimeout = CONNECT_TIMEOUT
-            readTimeout = READ_TIMEOUT
-
-            setRequestMethod(requestMethod.name)
-            headers.forEach { (key, value) -> addRequestProperty(key, value) }
-
-            body?.let { bodyString ->
-                doOutput = true
-                OutputStreamWriter(outputStream).use { it.write(bodyString) }
-            }
-        }
-
-        when (val errorCode = urlConnection.responseCode) {
-            in 100..199 -> throw IllegalArgumentException("Unexpected response code")
-            in 200..299 -> {
-                val responseString = InputStreamReader(urlConnection.inputStream).readText()
-                emit(Response.Success(gson.fromJson(responseString, responseType)))
-            }
-            in 300..399 -> throw IllegalArgumentException("Unexpected response code")
-            in 400..499 -> Response.Failure.RequestException<T>(errorCode, urlConnection.responseMessage)
-            in 500..599 -> Response.Failure.ServerException<T>(errorCode, urlConnection.responseMessage)
-            else -> throw IllegalArgumentException("Unexpected response code")
         }
     }
 }

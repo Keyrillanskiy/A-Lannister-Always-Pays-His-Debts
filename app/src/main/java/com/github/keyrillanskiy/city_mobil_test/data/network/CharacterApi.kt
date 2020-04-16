@@ -5,7 +5,7 @@ import com.github.keyrillanskiy.city_mobil_test.domain.models.CharacterInfoRespo
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
 
-const val CHARACTER_PAGE_SIZE = 10
+const val CHARACTER_PAGE_SIZE = 25
 private const val API_URL = "https://anapioficeandfire.com/api/characters/"
 
 /**

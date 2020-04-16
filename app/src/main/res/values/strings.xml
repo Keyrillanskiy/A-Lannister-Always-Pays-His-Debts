@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">A Lannister Always Pays His Debts</string>
+
+    <string name="retry">Retry</string>
+    <string name="network_unavailable_error">Network unavailable</string>
+    <string name="connection_error">Connection error</string>
+    <string name="request_invalid_error">Request invalid</string>
+    <string name="server_error">Server-side error</string>
 </resources>

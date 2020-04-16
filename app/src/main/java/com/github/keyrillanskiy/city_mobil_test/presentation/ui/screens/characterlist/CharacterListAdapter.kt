@@ -14,14 +14,14 @@ import kotlinx.android.synthetic.main.item_character.view.*
 /**
  * TODO doc
  */
-class CharacterListAdapter(private val items: MutableList<CharacterListItem>) : RecyclerView.Adapter<CharacterListViewHolder>() {
+class CharacterListAdapter(private val items: MutableList<CharacterListItem> = mutableListOf()) : RecyclerView.Adapter<CharacterListViewHolder>() {
 
     private var isLoadingItems = false
 
     override fun getItemViewType(position: Int): Int {
-        return when {
-            isLoadingItems -> if (position == lastPosition()) ITEM_CHARACTER_INFO else ITEM_PAGE_LOADING
-            else -> ITEM_CHARACTER_INFO
+        return when(items[position]) {
+            is CharacterInfo -> ITEM_CHARACTER_INFO
+            CharacterPageLoadingItem -> ITEM_PAGE_LOADING
         }
     }
 
@@ -54,9 +54,13 @@ class CharacterListAdapter(private val items: MutableList<CharacterListItem>) : 
 
     private fun lastPosition() = items.count() - 1
 
-    fun addItems(newItems: List<CharacterListItem>) {
+    fun insertItems(newItems: List<CharacterListItem>) {
+        if(isLoadingItems) {
+            hideLoading()
+        }
+        val insertPosition = items.count()
         items.addAll(newItems)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(insertPosition, newItems.count())
     }
 
     fun showLoading() {

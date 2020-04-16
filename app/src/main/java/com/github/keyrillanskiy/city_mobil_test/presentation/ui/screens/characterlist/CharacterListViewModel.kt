@@ -16,18 +16,17 @@ import kotlinx.coroutines.launch
  */
 class CharacterListViewModel : ViewModel() {
 
-    val characterInfoList = mutableListOf<CharacterInfoResponse>()
-    private var currentPage = 1
-
     private val _characterListLiveData = MutableLiveData<Response<List<CharacterInfoResponse>>>()
     val characterListLiveData: LiveData<Response<List<CharacterInfoResponse>>>
         get() = _characterListLiveData
+
+    private var currentPage = 1
 
     fun fetchCharacterInfoPage() {
         GlobalScope.launch {
             getCharacterList(page = currentPage)
                 .onEach { response -> if (response is Response.Success) currentPage++ }
-                .collect { response -> _characterListLiveData.value = response }
+                .collect { response -> _characterListLiveData.postValue(response) }
         }
     }
 

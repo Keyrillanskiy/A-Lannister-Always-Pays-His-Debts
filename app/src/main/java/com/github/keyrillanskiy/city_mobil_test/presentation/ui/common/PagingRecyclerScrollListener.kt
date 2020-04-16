@@ -7,9 +7,13 @@ import com.github.keyrillanskiy.city_mobil_test.data.network.CHARACTER_PAGE_SIZE
 /**
  * TODO doc
  */
-abstract class PagingRecyclerScrollListener(
-    private val layoutManager: LinearLayoutManager
+class PagingRecyclerScrollListener(
+    private val layoutManager: LinearLayoutManager,
+    private val onFetchNewItems: () -> Unit
 ) : RecyclerView.OnScrollListener() {
+
+    var isLoading = false
+    var isLastPage = false
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
@@ -17,20 +21,14 @@ abstract class PagingRecyclerScrollListener(
         val visibleItemCount = layoutManager.childCount
         val totalItemCount = layoutManager.itemCount
         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-        if (!isLoading() && !isLastPage()) {
+        if (!isLoading && !isLastPage) {
             if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                 && firstVisibleItemPosition >= 0
                 && totalItemCount >= CHARACTER_PAGE_SIZE
             ) {
-                fetchNewItems()
+                onFetchNewItems.invoke()
             }
         }
     }
-
-    protected abstract fun fetchNewItems()
-
-    abstract fun isLastPage(): Boolean
-
-    abstract fun isLoading(): Boolean
 
 }
