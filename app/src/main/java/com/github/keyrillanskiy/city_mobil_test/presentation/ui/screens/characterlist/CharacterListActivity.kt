@@ -25,6 +25,8 @@ class CharacterListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_list)
 
+        val characterId = intent.data?.lastPathSegment?.toIntOrNull()
+
         viewModel = ViewModelProvider(this).get(CharacterListViewModel::class.java)
         viewInteractor = CharacterListViewInteractor(rootView).setup {
             onLoadNewPage = { viewModel.fetchNextCharacterInfoPage() }
@@ -34,6 +36,8 @@ class CharacterListActivity : AppCompatActivity() {
         with(viewModel) {
             observe()
             fetchNextCharacterInfoPage()
+
+            characterId?.let { fetchCharacterInfo(it) }
         }
     }
 
@@ -42,12 +46,25 @@ class CharacterListActivity : AppCompatActivity() {
             when (response) {
                 is Response.Success -> viewInteractor.showItems(response.value.map { item -> item.mapToCharacterListItem() })
                 is Response.Loading -> viewInteractor.showPageLoading()
+                is Response.Failure -> {
+                    viewInteractor.tryToShowRetryButton()
+                    handleFailure(response)
+                }
+            }
+        })
+
+        characterLiveData.observe(this@CharacterListActivity, Observer { response ->
+            when (response) {
+                is Response.Success -> CharacterInfoActivity.launch(
+                    this@CharacterListActivity,
+                    response.value.mapToCharacterListItem()
+                )
                 is Response.Failure -> handleFailure(response)
             }
         })
     }
 
-    private fun CharacterInfoResponse.mapToCharacterListItem(): CharacterListItem {
+    private fun CharacterInfoResponse.mapToCharacterListItem(): CharacterListItem.CharacterInfo {
         return CharacterListItem.CharacterInfo(
             name = name,
             gender = gender,
@@ -64,8 +81,6 @@ class CharacterListActivity : AppCompatActivity() {
     }
 
     private fun handleFailure(failure: Response.Failure<*>) {
-        viewInteractor.tryToShowRetryButton()
-
         when (failure) {
             is Response.Failure.NetworkUnavailable -> toast(R.string.network_unavailable_error)
             is Response.Failure.ConnectException -> toast(R.string.connection_error)

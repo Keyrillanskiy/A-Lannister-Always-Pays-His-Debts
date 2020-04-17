@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.keyrillanskiy.city_mobil_test.data.common.Response
+import com.github.keyrillanskiy.city_mobil_test.data.network.getCharacterInfo
 import com.github.keyrillanskiy.city_mobil_test.data.network.getCharacterList
 import com.github.keyrillanskiy.city_mobil_test.domain.models.CharacterInfoResponse
 import kotlinx.coroutines.GlobalScope
@@ -17,6 +18,10 @@ class CharacterListViewModel : ViewModel() {
     val characterListLiveData: LiveData<Response<List<CharacterInfoResponse>>>
         get() = _characterListLiveData
 
+    private val _characterLiveData = MutableLiveData<Response<CharacterInfoResponse>>()
+    val characterLiveData: LiveData<Response<CharacterInfoResponse>>
+        get() = _characterLiveData
+
     private var currentPage = 1
 
     /**
@@ -28,6 +33,16 @@ class CharacterListViewModel : ViewModel() {
             getCharacterList(page = currentPage)
                 .onEach { response -> if (response is Response.Success) currentPage++ }
                 .collect { response -> _characterListLiveData.postValue(response) }
+        }
+    }
+
+    /**
+     * Делает запрос информации о персонаже.
+     */
+    fun fetchCharacterInfo(characterId: Int) {
+        GlobalScope.launch {
+            getCharacterInfo(characterId)
+                .collect { response -> _characterLiveData.postValue(response) }
         }
     }
 
