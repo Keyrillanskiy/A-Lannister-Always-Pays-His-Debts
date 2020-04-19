@@ -35,19 +35,12 @@ class HttpWrapperTest {
         runBlocking {
             val flow = requestAsync<Any>(responseType, API_URL)
 
-            flow.collect { response ->
-                when (response) {
-                    is Response.Failure.NetworkUnavailable,
-                    is Response.Failure.ConnectException,
-                    is Response.Failure.RequestException,
-                    is Response.Failure.ServerException -> fail()
-                }
-            }
+            flow.collect { response -> if (response is Response.Failure) fail() }
         }
     }
 
     @Test
-    fun requestAsync_InvalidUrl_Response404() {
+    fun requestAsync_InvalidUrl_RequestException() {
         val responseType = object : TypeToken<Any>() {}.type
         val url = "${API_URL}some_invalid_path"
 
@@ -76,10 +69,7 @@ class HttpWrapperTest {
 
             flow.collect { response ->
                 when (response) {
-                    is Response.Failure.NetworkUnavailable,
-                    is Response.Failure.ConnectException,
-                    is Response.Failure.RequestException,
-                    is Response.Failure.ServerException -> fail()
+                    is Response.Failure -> fail()
                     is Response.Success -> {
                         assertTrue(response.value.isNotEmpty())
                         assertTrue(response.value.entries.first().value.isNotBlank())
