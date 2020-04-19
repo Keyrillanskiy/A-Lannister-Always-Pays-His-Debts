@@ -21,7 +21,7 @@ val CONNECT_TIMEOUT = TimeUnit.SECONDS.toMillis(30).toInt()
 val READ_TIMEOUT = TimeUnit.SECONDS.toMillis(30).toInt()
 
 val gson by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { Gson() }
-lateinit var connectivityManager: ConnectivityManager //сомнительное решение, зато функцией request удобно пользоваться
+lateinit var connectivityManager: ConnectivityManager //сомнительное решение, зато функцией requestAsync удобно пользоваться
 
 enum class HttpRequestMethod { GET }
 
@@ -29,20 +29,21 @@ enum class HttpRequestMethod { GET }
  * Инициализация [ConnectivityManager] для работы с сетью.
  * Нужно произвести инициализацию при старте приложения!
  */
-fun initConnectivityManager(context: Context) {
+fun initConnectivityManager(context: Context): ConnectivityManager {
     connectivityManager = getSystemService(context, ConnectivityManager::class.java)
         ?: throw IllegalArgumentException("connectivityManager is null")
+    return connectivityManager
 }
 
 @Suppress("DEPRECATION")
-fun isNetworkAvailable(): Boolean {
+fun isNetworkAvailable(connectManager: ConnectivityManager = connectivityManager): Boolean {
     if (Build.VERSION.SDK_INT < 23) {
-        val networkInfo = connectivityManager.activeNetworkInfo ?: return false
+        val networkInfo = connectManager.activeNetworkInfo ?: return false
         return networkInfo.isConnected &&
                 (networkInfo.type == ConnectivityManager.TYPE_WIFI || networkInfo.type == ConnectivityManager.TYPE_MOBILE)
     } else {
-        val network = connectivityManager.activeNetwork ?: return false
-        val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        val network = connectManager.activeNetwork ?: return false
+        val networkCapabilities = connectManager.getNetworkCapabilities(network) ?: return false
 
         return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
                 networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
