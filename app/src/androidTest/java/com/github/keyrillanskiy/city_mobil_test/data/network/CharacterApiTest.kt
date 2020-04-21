@@ -52,7 +52,7 @@ class CharacterApiTest {
     fun getCharacterList_PageSize51_PageSizeStill50() {
         val pageSize = 51
         runBlocking {
-            val flow = getCharacterList(pageSize)
+            val flow = getCharacterList(pageSize = pageSize)
 
             flow.collect { response ->
                 if (response is Response.Success) {
@@ -66,7 +66,7 @@ class CharacterApiTest {
     fun getCharacterList_PageSize0_ServerException() {
         val pageSize = 0
         runBlocking {
-            val flow = getCharacterList(pageSize)
+            val flow = getCharacterList(pageSize = pageSize)
 
             flow.collect { response -> if (response is Response.Success) fail() }
         }
