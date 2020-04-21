@@ -3,6 +3,7 @@ package com.github.keyrillanskiy.city_mobil_test.data.network
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.keyrillanskiy.city_mobil_test.data.common.Response
+import com.github.keyrillanskiy.city_mobil_test.utils.typeOf
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
@@ -30,10 +31,8 @@ class HttpWrapperTest {
 
     @Test
     fun requestAsync_NoParams_ResponseSuccess() {
-        val responseType = object : TypeToken<Any>() {}.type
-
         runBlocking {
-            val flow = requestAsync<Any>(responseType, API_URL)
+            val flow = requestAsync<Any>(typeOf<Any>(), API_URL)
 
             flow.collect { response -> if (response is Response.Failure) fail() }
         }
@@ -41,11 +40,10 @@ class HttpWrapperTest {
 
     @Test
     fun requestAsync_InvalidUrl_RequestException() {
-        val responseType = object : TypeToken<Any>() {}.type
         val url = "${API_URL}some_invalid_path"
 
         runBlocking {
-            val flow = requestAsync<Any>(responseType, url)
+            val flow = requestAsync<Any>(typeOf<Any>(), url)
 
             flow.collect { response ->
                 when (response) {
@@ -62,7 +60,7 @@ class HttpWrapperTest {
 
     @Test
     fun requestAsync_NoParams_JsonParsingSuccess() {
-        val responseType = object : TypeToken<Map<String, String>>() {}.type
+        val responseType = typeOf<Map<String, String>>()
 
         runBlocking {
             val flow = requestAsync<Map<String, String>>(responseType, API_URL)

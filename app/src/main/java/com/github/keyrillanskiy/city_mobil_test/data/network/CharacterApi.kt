@@ -2,6 +2,7 @@ package com.github.keyrillanskiy.city_mobil_test.data.network
 
 import com.github.keyrillanskiy.city_mobil_test.data.common.Response
 import com.github.keyrillanskiy.city_mobil_test.domain.models.CharacterInfoResponse
+import com.github.keyrillanskiy.city_mobil_test.utils.typeOf
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
 
@@ -17,9 +18,8 @@ private const val API_URL = "https://anapioficeandfire.com/api/characters/"
  * @return [Flow] со списком персонажей.
  */
 suspend fun getCharacterList(page: Int = 1, pageSize: Int = CHARACTER_PAGE_SIZE): Flow<Response<List<CharacterInfoResponse>>> {
-    object : TypeToken<List<CharacterInfoResponse>>() {}.type
     return requestAsync(
-        responseType = object : TypeToken<List<CharacterInfoResponse>>() {}.type,
+        responseType = typeOf<List<CharacterInfoResponse>>(),
         url = API_URL,
         queryParameters = mapOf("page" to page.toString(), "pageSize" to pageSize.toString())
     )
@@ -34,7 +34,7 @@ suspend fun getCharacterList(page: Int = 1, pageSize: Int = CHARACTER_PAGE_SIZE)
  */
 suspend fun getCharacterInfo(characterId: Int): Flow<Response<CharacterInfoResponse>> {
     return requestAsync(
-        responseType = object : TypeToken<CharacterInfoResponse>() {}.type,
+        responseType = typeOf<CharacterInfoResponse>(),
         url = "$API_URL$characterId"
     )
 }
