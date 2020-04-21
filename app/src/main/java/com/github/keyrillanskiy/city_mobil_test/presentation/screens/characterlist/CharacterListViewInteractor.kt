@@ -38,12 +38,10 @@ class CharacterListViewInteractor(private val rootView: View) {
     }
 
     fun showItems(newItems: List<CharacterListItem>) {
-        with(rootView) {
-            characterListRetryButton.visibility = View.GONE
-            pagingScrollListener.isLoading = false
-            pagingScrollListener.isLastPage = newItems.isEmpty()
-            listAdapter.insertItems(newItems)
-        }
+        rootView.characterListRetryButton.visibility = View.GONE
+        pagingScrollListener.isLoading = false
+        pagingScrollListener.isLastPage = newItems.isEmpty()
+        listAdapter.insertItems(newItems)
     }
 
     fun showPageLoading() {

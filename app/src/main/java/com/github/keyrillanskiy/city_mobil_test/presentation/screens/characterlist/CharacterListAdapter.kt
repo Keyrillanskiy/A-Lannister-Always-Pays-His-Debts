@@ -16,8 +16,9 @@ import kotlinx.android.synthetic.main.item_character.view.*
 /**
  * Адаптер списка персонажей. Поддерживает "пагинацию".
  */
-class CharacterListAdapter(private val items: MutableList<CharacterListItem> = mutableListOf()) :
-    RecyclerView.Adapter<CharacterListViewHolder>() {
+class CharacterListAdapter(
+    private val items: MutableList<CharacterListItem> = mutableListOf()
+) : RecyclerView.Adapter<CharacterListViewHolder>() {
 
     private var isLoadingItems = false
     var onItemClick: ((CharacterInfo) -> Unit)? = null
@@ -59,8 +60,6 @@ class CharacterListAdapter(private val items: MutableList<CharacterListItem> = m
 
     override fun getItemCount(): Int = items.count()
 
-    private fun lastPosition() = items.count() - 1
-
     fun insertItems(newItems: List<CharacterListItem>) {
         if (isLoadingItems) {
             hideLoading()
@@ -82,6 +81,8 @@ class CharacterListAdapter(private val items: MutableList<CharacterListItem> = m
         items.removeAt(lastPosition)
         notifyItemRemoved(lastPosition)
     }
+
+    private fun lastPosition() = items.count() - 1
 
     companion object {
         private const val ITEM_CHARACTER_INFO = 1

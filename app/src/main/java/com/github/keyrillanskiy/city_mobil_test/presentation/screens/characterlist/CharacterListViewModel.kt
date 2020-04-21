@@ -41,8 +41,7 @@ class CharacterListViewModel : ViewModel() {
      */
     fun fetchCharacterInfo(characterId: Int) {
         GlobalScope.launch {
-            getCharacterInfo(characterId)
-                .collect { response -> _characterLiveData.postValue(response) }
+            getCharacterInfo(characterId).collect { response -> _characterLiveData.postValue(response) }
         }
     }
 
