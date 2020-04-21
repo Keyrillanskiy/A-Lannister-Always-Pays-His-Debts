@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.keyrillanskiy.city_mobil_test.data.network.CHARACTER_PAGE_SIZE
 
 /**
- * TODO doc
+ * [RecyclerView.OnScrollListener] для поддержки пагинации.
+ * Вызывает [onFetchNewItems] для загрузки данных при скролле до конца списка.
  */
 class PagingRecyclerScrollListener(
     private val layoutManager: LinearLayoutManager,
