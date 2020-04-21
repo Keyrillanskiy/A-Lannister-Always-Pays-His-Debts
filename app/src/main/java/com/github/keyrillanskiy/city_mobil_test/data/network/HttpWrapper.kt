@@ -17,11 +17,11 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-val CONNECT_TIMEOUT = TimeUnit.SECONDS.toMillis(30).toInt()
-val READ_TIMEOUT = TimeUnit.SECONDS.toMillis(30).toInt()
+private val CONNECT_TIMEOUT = TimeUnit.SECONDS.toMillis(30).toInt()
+private val READ_TIMEOUT = TimeUnit.SECONDS.toMillis(30).toInt()
 
-val gson by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { Gson() }
-lateinit var connectivityManager: ConnectivityManager //сомнительное решение, зато функцией requestAsync удобно пользоваться
+private val gson by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) { Gson() }
+private lateinit var connectivityManager: ConnectivityManager //сомнительное решение, зато функцией requestAsync удобно пользоваться
 
 enum class HttpRequestMethod { GET }
 

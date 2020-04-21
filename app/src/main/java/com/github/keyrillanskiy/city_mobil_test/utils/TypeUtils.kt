@@ -6,6 +6,6 @@ import java.lang.reflect.Type
 /**
  * Функция для более красивого кода получения [Type].
  */
-fun <T> typeOf(): Type {
+inline fun <reified T> typeOf(): Type {
     return object : TypeToken<T>() {}.type
 }
