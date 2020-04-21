@@ -1,4 +1,4 @@
-package com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterinfo
+package com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterinfo
 
 import android.content.Intent
 import android.widget.ImageButton
@@ -10,7 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.github.keyrillanskiy.city_mobil_test.R
-import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist.CharacterListItem
+import com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist.CharacterListItem
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Rule

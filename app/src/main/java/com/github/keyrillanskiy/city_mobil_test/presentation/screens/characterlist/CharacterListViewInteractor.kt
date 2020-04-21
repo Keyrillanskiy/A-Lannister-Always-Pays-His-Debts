@@ -1,8 +1,8 @@
-package com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist
+package com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.keyrillanskiy.city_mobil_test.presentation.ui.common.PagingRecyclerScrollListener
+import com.github.keyrillanskiy.city_mobil_test.presentation.common.PagingRecyclerScrollListener
 import kotlinx.android.synthetic.main.activity_character_list.view.*
 
 /**

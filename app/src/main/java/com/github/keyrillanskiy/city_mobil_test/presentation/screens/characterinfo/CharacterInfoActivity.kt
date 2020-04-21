@@ -1,4 +1,4 @@
-package com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterinfo
+package com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterinfo
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.github.keyrillanskiy.city_mobil_test.R
-import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist.CharacterListItem
+import com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist.CharacterListItem
 import kotlinx.android.synthetic.main.activity_character_info.*
 
 /**

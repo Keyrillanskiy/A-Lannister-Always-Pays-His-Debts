@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".presentation.ui.screens.characterlist.CharacterListActivity">
+        <activity android:name="com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist.CharacterListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.ui.screens.characterinfo.CharacterInfoActivity" />
+        <activity android:name="com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterinfo.CharacterInfoActivity" />
 
     </application>
 

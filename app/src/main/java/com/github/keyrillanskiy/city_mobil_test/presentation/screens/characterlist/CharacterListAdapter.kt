@@ -1,4 +1,4 @@
-package com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist
+package com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist
 
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.keyrillanskiy.city_mobil_test.R
-import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist.CharacterListItem.CharacterInfo
-import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist.CharacterListItem.CharacterPageLoadingItem
-import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist.CharacterListViewHolder.CharacterInfoViewHolder
-import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist.CharacterListViewHolder.CharacterPageLoadingViewHolder
+import com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist.CharacterListItem.CharacterInfo
+import com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist.CharacterListItem.CharacterPageLoadingItem
+import com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist.CharacterListViewHolder.CharacterInfoViewHolder
+import com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist.CharacterListViewHolder.CharacterPageLoadingViewHolder
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.item_character.view.*
 

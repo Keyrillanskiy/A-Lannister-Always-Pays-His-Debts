@@ -1,4 +1,4 @@
-package com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist
+package com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.github.keyrillanskiy.city_mobil_test.R
 import com.github.keyrillanskiy.city_mobil_test.data.common.Response
 import com.github.keyrillanskiy.city_mobil_test.domain.models.CharacterInfoResponse
-import com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterinfo.CharacterInfoActivity
+import com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterinfo.CharacterInfoActivity
 import kotlinx.android.synthetic.main.activity_character_list.*
 
 /**

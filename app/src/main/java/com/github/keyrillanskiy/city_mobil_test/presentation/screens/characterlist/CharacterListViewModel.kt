@@ -1,4 +1,4 @@
-package com.github.keyrillanskiy.city_mobil_test.presentation.ui.screens.characterlist
+package com.github.keyrillanskiy.city_mobil_test.presentation.screens.characterlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
