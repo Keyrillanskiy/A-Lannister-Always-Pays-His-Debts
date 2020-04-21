@@ -80,7 +80,7 @@ class CharacterInfoActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val KEY_CHARACTER_INFO = "com.github.keyrillanskiy.character_info"
+        const val KEY_CHARACTER_INFO = "com.github.keyrillanskiy.character_info"
 
         fun launch(context: Context, characterInfo: CharacterListItem.CharacterInfo) {
             val intent = Intent(context, CharacterInfoActivity::class.java).apply {
